@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Reservation from './ReservationComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent'
 import Home from './HomeComponent';
@@ -7,6 +8,29 @@ import CampsiteInfo from './CampsiteInfoComponent';
 import { View, Platform, StyleSheet } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
+
+const ReservationNavigator = createStackNavigator(
+    {
+        Reservation: { screen: Reservation }
+    },
+    {
+        navigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='tree'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }
+);
 
 const DirectoryNavigator = createStackNavigator(
     {
@@ -118,6 +142,7 @@ const MainNavigator = createDrawerNavigator(
     {
         Home: {screen:HomeNavigator},
         Directory: {screen: DirectoryNavigator},
+        Reservation:{screen: ReservationNavigator},
         About: {screen: AboutNavigator},
         Contact: {screen: ContactNavigator},
     },
