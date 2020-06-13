@@ -6,8 +6,9 @@ import { deleteFavorite } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import * as Animatable from 'react-native-animatable';
 
-const mapDispatchToProps = { deleteFavorite: campsiteId => (deleteFavorite(campsiteId))};
+const mapDispatchToProps = { deleteFavorite: campsiteId => (deleteFavorite(campsiteId)) };
 
 const mapStateToProps = state => {
     return {
@@ -27,15 +28,15 @@ class Favorites extends Component {
         const renderFavoriteItem = ({ item }) => {
             const rightButton = [
                 {
-                    text: 'Delete', 
+                    text: 'Delete',
                     type: 'delete',
                     onPress: () => {
                         Alert.alert(
                             'Delete Favorite?',
                             'Are you sure you wish to delete the favorite campsite ' + item.name + '?',
                             [
-                                { 
-                                    text: 'Cancel', 
+                                {
+                                    text: 'Cancel',
                                     onPress: () => console.log(item.name + 'Not Deleted'),
                                     style: ' cancel'
                                 },
@@ -52,12 +53,14 @@ class Favorites extends Component {
 
             return (
                 <Swipeout right={rightButton} autoClose={true}>
-                <ListItem
-                    title={item.name}
-                    subtitle={item.description}
-                    leftAvatar={{ source: { uri: baseUrl + item.image } }}
-                    onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
-                />
+                    <Animatable.View animation='fadeInRightBig' duration={2000}>
+                        <ListItem
+                            title={item.name}
+                            subtitle={item.description}
+                            leftAvatar={{ source: { uri: baseUrl + item.image } }}
+                            onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
+                        />
+                    </Animatable.View>
                 </Swipeout>
             );
         };
