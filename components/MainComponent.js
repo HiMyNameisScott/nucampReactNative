@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Login from './LoginComponent';
 import Favorites from './FavoritesComponent';
 import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
@@ -21,6 +22,29 @@ const mapDispatchToProps = {
     fetchPromotions,
     fetchPartners
 };
+
+const LoginNavigator = createStackNavigator(
+    {
+        Login: {screen: Login}
+    },
+    {
+        navigationOptions: ({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='sign-in'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={()=> navigation.toggleDrawer()}
+                />
+        })
+    }
+)
 
 const FavoritesNavigator = createStackNavigator(
     {
@@ -269,8 +293,22 @@ const MainNavigator = createDrawerNavigator(
             )
         }
     },
+    Login: {
+        screen: LoginNavigator,
+        navigationOptions: {
+            drawerIcon: ({tintColor}) => (
+                <Icon
+                    name='Sign-in'
+                    type='font-awesome'
+                    size={24}
+                    color={tintColor}
+                    />
+            )
+        }
+    },
 },
     {
+        initialRouteName: 'Home',
         drawerBackgroundColor: '#CEC8FF',
         contentComponent: CustomDrawerContentComponent
     }
